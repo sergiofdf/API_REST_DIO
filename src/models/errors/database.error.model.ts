@@ -6,7 +6,6 @@ class DatabaseError extends Error{
     public error?: any,
   ){
     super(message);
-    this.error = error;
   }
 
 }
