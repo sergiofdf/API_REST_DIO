@@ -3,7 +3,7 @@ import ForbiddenError from "../models/errors/forbidden.error.model";
 import userRepository from "../repositories/user.repository";
 
 
-async function basicAuthenticationMiddleware(req: Request, res: Response, next:NextFunction){
+async function basicAuthenticationMiddleware(req: Request, res: Response, next:NextFunction):Promise<void>{
   try{
 
     const authorizationHeader = req.headers['authorization'];

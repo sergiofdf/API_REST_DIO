@@ -2,8 +2,6 @@ import db from "../db";
 import User from "../models/user.model";
 import DatabaseError from "../models/errors/database.error.model";
 
-db
-
 class UserRepository{
   
   async findAllUsers(): Promise<User[]>{
@@ -34,16 +32,18 @@ class UserRepository{
 
   async findByUsernameAndPassword(username: string, password: string): Promise<User | null>{
     try{
-      const query = `
-        SELECT uuid, username 
-        FROM application_user
-        WHERE username = $1
-        AND password = crypt($2, 'my_salt')
-      `;
+      const query =`
+                SELECT 
+                    uuid, 
+                    username
+                FROM application_user
+                WHERE username = $1
+                AND password = crypt($2, 'my_salt')
+            `;
       const values = [username, password];
-      const { rows } = await db.query<User>(query, values);
-      const [user] = rows;
-      return user || null;
+      const queryResult = await db.query(query, values);
+      const [row] = queryResult.rows;
+      return !row ? null : row;
     }catch(error){
       throw new DatabaseError('Erro na consulta por username e password', error);
     }
