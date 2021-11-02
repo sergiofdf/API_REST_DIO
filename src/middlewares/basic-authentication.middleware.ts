@@ -27,8 +27,6 @@ async function basicAuthenticationMiddleware(req: Request, res: Response, next:N
   }
 
   const user = await userRepository.findByUsernameAndPassword(username, password);
-  console.log(user);
-  
 
   if(!user){
     throw new ForbiddenError('Usuário ou senha inválidos!');
